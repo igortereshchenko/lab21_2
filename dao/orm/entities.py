@@ -76,6 +76,8 @@ if __name__ == '__main__':
     db = PostgresDb()
     # simple query test
     q1 = db.sqlalchemy_session.query(Discipline).all()
+    for q in q1:
+        print(q)
     q2 = db.sqlalchemy_session.query(Student).all()
     q3 = db.sqlalchemy_session.query(Task).all()
     q4 = db.sqlalchemy_session.query(Student_Task).join(Student).join(Task).all()
