@@ -15,53 +15,6 @@ def root():
     return render_template('index.html')
 
 
-# @app.route('/dashboard', methods=['GET', 'POST'])
-# def dashboard():
-#     db = PostgresDb()
-#
-#     data = {
-#         "bar": [],
-#         "pie": {}
-#     }
-#
-#     student_uni_and_faculty_set = db.sqlalchemy_session.query(Student.student_university,
-#                                                               Student.student_faculty).distinct(
-#         Student.student_university, Student.student_faculty).all()
-#
-#     for uni, faculty in student_uni_and_faculty_set:
-#         query = db.sqlalchemy_session.query(Student.student_group, func.count(Student.student_group)).group_by(
-#             Student.student_group).filter(
-#             Student.student_university == uni, Student.student_faculty == faculty).all()
-#
-#         groups, counts = zip(*query)
-#         pie = go.Pie(
-#             labels=[f'group = {group}' for group in groups],
-#             values=counts
-#         )
-#         data['pie'][f'university = {uni}, faculty = {faculty}'] = pie
-#
-#     points = db.sqlalchemy_session.query(StudentRecordBook.semester_mark,
-#                                          StudentRecordBook.final_mark).distinct(
-#         StudentRecordBook.semester_mark,
-#         StudentRecordBook.final_mark).filter(StudentRecordBook.final_mark != 0).all()
-#
-#     semester, final = zip(*points)
-#     bar = go.Scatter(
-#         x=semester,
-#         y=final,
-#         mode='markers'
-#     )
-#
-#     data["bar"].append(bar)
-#
-#     json_data = json.dumps(data, cls=plotly.utils.PlotlyJSONEncoder)
-#
-#     return render_template('dashboard.html', json=json_data, pie_labels=list(data["pie"].keys()))
-
-
-# FILE ORIENTED QUERIES -----------------------------------------------------------------------------------------------
-
-
 @app.route('/teacher', methods=['GET'])
 def index_teacher():
     db = PostgresDb()
