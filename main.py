@@ -35,6 +35,7 @@ def show():
     result = db.sqlalchemy_session.query(Result).all()
 
     return render_template('result.html', results=result)
+
 @app.route('/teacher', methods=['GET'])
 def index_teacher():
     db = PostgresDb()
@@ -42,8 +43,6 @@ def index_teacher():
     result = db.sqlalchemy_session.query(Teacher).all()
 
     return render_template('teacher.html', teachers=result)
-
-
 
 
 @app.route('/new_teacher', methods=['GET', 'POST'])
