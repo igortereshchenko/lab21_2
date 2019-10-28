@@ -23,6 +23,19 @@ def index_teacher():
 
     return render_template('teacher.html', teachers=result)
 
+@app.route('/install', methods=['GET'])
+def add_result():
+    result_obj = Result(
+        task_id=1,
+        time_done='19:10:25',
+        duration=60,
+        complex=4,
+        mark=95
+    )
+    db = PostgresDb()
+    db.sqlalchemy_session.add(result_obj)
+    db.sqlalchemy_session.commit()
+
 
 @app.route('/new_teacher', methods=['GET', 'POST'])
 def new_teacher():

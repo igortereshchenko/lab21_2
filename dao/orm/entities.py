@@ -68,6 +68,15 @@ class Student_Task(Base):
                                             Student.sgroup]),
                       {})
 
+class Result(Base):
+    __tablename__='Result'
+
+    task_id = Column(Integer,ForeignKey('Task.id'),primary_key=True)
+    time_done = Column(Date,nullable=False)
+    duration = Column(Integer,nullable=False)
+    complex = Column(Integer,nullable=False)
+    mark = Column(Integer,nullable=False)
+
 
 
 if __name__ == '__main__':
