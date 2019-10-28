@@ -20,12 +20,11 @@
             <td> {{result.duration}}</td>
             <td> {{result.complex}}</td>
             <td> {{result.mark}}</td>
-            <td> {{result.teacher.degree}}</td>
 
             <td>
-                <a href="/update?name={{teacher.name}}" title="edit button">
+                <a href="/update" title="edit button">
                     <button type="button" class="btn btn-warning" name="btn_edit_user"
-                            data-user_id="{{teacher.name}}">Edit
+                            data-user_id="{{result.task_id}}">Edit
                     </button>
                 </a>
             </td>
