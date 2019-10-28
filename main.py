@@ -14,17 +14,8 @@ app.secret_key = 'development key'
 def root():
     return render_template('index.html')
 
-
-@app.route('/teacher', methods=['GET'])
-def index_teacher():
-    db = PostgresDb()
-
-    result = db.sqlalchemy_session.query(Teacher).all()
-
-    return render_template('teacher.html', teachers=result)
-
 @app.route('/install', methods=['GET'])
-def add_result():
+def install():
     result_obj = Result(
         task_id=1,
         time_done='19:10:25',
@@ -35,6 +26,24 @@ def add_result():
     db = PostgresDb()
     db.sqlalchemy_session.add(result_obj)
     db.sqlalchemy_session.commit()
+    return render_template('index.html')
+
+@app.route('/show',methon=['GET'])
+def show():
+    db = PostgresDb()
+
+    result = db.sqlalchemy_session.query(Result).all()
+
+    return render_template('result.html', results=result)
+@app.route('/teacher', methods=['GET'])
+def index_teacher():
+    db = PostgresDb()
+
+    result = db.sqlalchemy_session.query(Teacher).all()
+
+    return render_template('teacher.html', teachers=result)
+
+
 
 
 @app.route('/new_teacher', methods=['GET', 'POST'])

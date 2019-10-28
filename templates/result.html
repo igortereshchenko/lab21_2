@@ -1,0 +1,40 @@
+{% extends "index.html" %}
+
+{% block content %}
+
+
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">name</th>
+            <th scope="col">degree</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        {% for result in results%}
+        <tr>
+            <td> {{result.task_id}} </td>
+            <td> {{result.time_done}} </td>
+            <td> {{result.duration}}</td>
+            <td> {{result.complex}}</td>
+            <td> {{result.mark}}</td>
+            <td> {{result.teacher.degree}}</td>
+
+            <td>
+                <a href="/update?name={{teacher.name}}" title="edit button">
+                    <button type="button" class="btn btn-warning" name="btn_edit_user"
+                            data-user_id="{{teacher.name}}">Edit
+                    </button>
+                </a>
+            </td>
+        </tr>
+        {% endfor %}g
+        </tbody>
+    </table>
+</div>
+
+<!--<script src="{{ url_for('static', filename='js/skill.js') }}"></script>-->
+
+{% endblock %}
