@@ -28,7 +28,7 @@ def install():
     db.sqlalchemy_session.commit()
     return render_template('index.html')
 
-@app.route('/show',methon=['GET'])
+@app.route('/show',methods=['GET'])
 def show():
     db = PostgresDb()
 
