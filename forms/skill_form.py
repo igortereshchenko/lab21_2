@@ -1,15 +1,9 @@
 from flask_wtf import Form
-from wtforms import StringField, SubmitField, HiddenField, IntegerField
-from wtforms import validators
+from wtforms import StringField, SubmitField, HiddenField
+from wtforms import validators, ValidationError
 
 
 class SkillForm(Form):
-    student_name = StringField("student name: ", [
-        validators.DataRequired("Please enter student name."),
-        validators.Length(3, 255, "Name should be from 3 to 255 symbols")
-    ])
-    student_group = IntegerField("student group: ", [
-        validators.DataRequired("Please enter student group.")])
     name = StringField("name: ", [
         validators.DataRequired("Please enter skill name."),
         validators.Length(0, 100, "Name should be from 0 to 100 symbols")
@@ -20,14 +14,18 @@ class SkillForm(Form):
     vacancy = StringField("vacancy: ", [
         validators.DataRequired("Please enter skill vacancy."),
     ])
+    def validate_on_submit(form,field):
+        if (field.data < '2019-01-01 0:0:0-0'):
+            raise ValidationError('Date should be after 2019')
     creation_date = StringField("creation date: ", [
         validators.DataRequired("Please enter creation date."),
-        validators.number_range(min=2019,message="Date should be after 2019")
+        validate_on_submit
     ])
 
-    old_student_name = HiddenField()
-    old_student_group = HiddenField()
+
+
+    student_name = HiddenField()
+    student_group = HiddenField()
     old_name = HiddenField()
-    old_student_entity = HiddenField()
 
     submit = SubmitField("Save")

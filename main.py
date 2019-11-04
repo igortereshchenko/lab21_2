@@ -48,7 +48,9 @@ def update():
 
     if request.method == 'GET':
 
-        student_name, student_group, name = request.args.get('student_name', 'student_group','name')
+        student_name = request.args.get('student_name')
+        student_group = request.args.get('student_group')
+        name = request.args.get('name')
         db = PostgresDb()
         skill_obj = db.sqlalchemy_session.query(Skill).filter(Skill.student_name == student_name,
                                                               Skill.student_group == student_group,
@@ -56,14 +58,13 @@ def update():
                                                               ).one()
 
         # fill form and send to user
-        form.student_name.data = skill_obj.student_name
-        form.student_group.data = skill_obj.student_group
+        form.student_name.data=skill_obj.student_name
+        form.student_group.data=skill_obj.student_group
         form.vacancy.data = skill_obj.vacancy
+        form.type.data=skill_obj.type
         form.creation_date.data = skill_obj.creation_date
         form.name.data = skill_obj.name
 
-        form.old_student_name.data = skill_obj.student_name
-        form.old_student_group.data = skill_obj.student_group
         form.old_name.data = skill_obj.name
         return render_template('skill_form.html', form=form, form_name="Edit skill", action="update")
 
@@ -75,14 +76,13 @@ def update():
             db = PostgresDb()
             # find professor
 
-            skill_obj = db.sqlalchemy_session.query(Skill).filter(Skill.student_name == form.old_student_name.data,
-                                                                  Skill.student_group == form.old_student_group.data ,
+            skill_obj = db.sqlalchemy_session.query(Skill).filter(Skill.student_name == form.student_name.data,
+                                                                  Skill.student_group == form.student_group.data,
                                                                   Skill.name == form.old_name.data
                                                                   ).one()
 
             # update fields from form data
-            skill_obj.student_name = form.student_name.data
-            skill_obj.student_group = form.student_group.data
+            skill_obj.type = form.type.data
             skill_obj.vacancy = form.vacancy.data
             skill_obj.creation_date = form.creation_date.data
             skill_obj.name = form.name.data
