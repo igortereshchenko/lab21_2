@@ -27,8 +27,8 @@
             <td>{{ car.Student.Student_name }}</td>
             <td>{{ car.Student.Student_surname }}</td>
             <td class="d-flex justify-content-end">
-                <a href="{{ url_for('update_car', uuid=car.Card_id) }}" class="btn btn-success">Edit</a>
-                <form method="post" action="{{ url_for('delete_car', uuid=car.Card_id) }}"
+                <a href="{{ url_for('update_car', uuid=car.Car_id) }}" class="btn btn-success">Edit</a>
+                <form method="post" action="{{ url_for('delete_car', uuid=car.Car_id) }}"
                       class="delete-record">
                     <input type="submit" value="Delete" class="btn btn-danger"/>
                 </form>
@@ -39,4 +39,3 @@
     </table>
 </div>
 {% endblock %}
-Format is D.M.Y only!

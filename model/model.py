@@ -134,7 +134,7 @@ class StudentHasWork(db.Model):
 class CarsTable(db.Model):
     __tablename__ = 'cars_table'
 
-    Card_id = db.Column("student_work_id", db.Integer, primary_key=True)
+    Car_id = db.Column("student_work_id", db.Integer, primary_key=True)
     Model = db.Column("model", db.String, nullable=False)
     Cost = db.Column("cost", db.Integer, nullable=False)
     Number = db.Column("number", db.Integer, nullable=False)

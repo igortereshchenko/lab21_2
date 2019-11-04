@@ -12,6 +12,7 @@ from forms.StudentForm import StudentForm
 from forms.WorkForm import WorkForm
 from forms.StudentHasWorkForm import StudentHasWorkForm
 from forms.CarsForm import CarsForm
+from model.vizualization import visualization_data
 
 app = Flask(__name__)
 app.secret_key = 'development key'
@@ -44,25 +45,25 @@ def map():
                       Cost='1000',
                       Number='123456',
                       Color='Red',
-                      StudentCardFk=32
+                      StudentCardFk=2
                       )
 
     car_2 = CarsTable(Model='Audi',
                       Cost='750',
                       Number='987654',
                       Color='Green',
-                      StudentCardFk=32
+                      StudentCardFk=2
                       )
 
     car_3 = CarsTable(Model='Nissan',
                       Cost='200',
                       Number='888888',
                       Color='Red',
-                      StudentCardFk=33
+                      StudentCardFk=3
                       )
 
-    db.session.add_all([student_1, student_2, student_3])
-    # db.session.add_all([car_1, car_2, car_3])
+    # db.session.add_all([student_1, student_2, student_3])
+    db.session.add_all([car_1, car_2, car_3])
     db.session.commit()
     return render_template("main.html")
 
@@ -422,7 +423,7 @@ def new_car():
 
 @app.route("/show/delete/<uuid>", methods=["POST"])
 def delete_car(uuid):
-    car = CarsTable.query.filter(CarsTable.Card_id == uuid).first()
+    car = CarsTable.query.filter(CarsTable.Car_id == uuid).first()
     if car:
         db.session.delete(car)
         db.session.commit()
@@ -432,7 +433,7 @@ def delete_car(uuid):
 
 @app.route("/show/<uuid>", methods=["GET", "POST"])
 def update_car(uuid):
-    car = CarsTable.query.filter(CarsTable.Card_id == uuid).first()
+    car = CarsTable.query.filter(CarsTable.Car_id == uuid).first()
     form = car.filled_form()
     form.Student_name.choices = [
         (str(student.Student_card), f"{student.Student_name} {student.Student_surname}") for student in
@@ -447,6 +448,13 @@ def update_car(uuid):
         return redirect(url_for("show"))
 
     return render_template("show/update.html", form=form)
+
+
+@app.route("/bar", methods=["GET"])
+def visualization():
+    data = visualization_data()
+
+    return render_template("bar.html", students_cars=data)
 
 
 if __name__ == "__main__":
