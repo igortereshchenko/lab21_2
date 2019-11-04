@@ -1,0 +1,34 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<form method="post">
+    {{ form.hidden_tag() }}
+
+    <div class="form-group">
+        {{ form.Model.label }}
+        {{ form.Model(class_="form-control") }}
+    </div>
+    <div class="form-group">
+        {{ form.Cost.label }}
+        {% for error in form.errors.Cost %}
+        <span style="color: red;">[{{error}}]</span>
+        {% endfor %}<br>
+        {{ form.Cost(class_="form-control") }}
+    </div>
+    <div class="form-group">
+        {{ form.Number.label }}
+        {{ form.Number(class_="form-control") }}
+    </div>
+    <div class="form-group">
+        {{ form.Color.label }}
+        {{ form.Color(class_="form-control") }}
+    </div>
+    <div class="form-group">
+        {{form.Student_name.label}}
+        {{form.Student_name(class_="form-control")}}
+    </div>
+
+    {{ form.Submit(class_="btn btn-success") }}
+</form>
+{% endblock %}
