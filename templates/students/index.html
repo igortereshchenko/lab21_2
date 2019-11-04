@@ -1,0 +1,32 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<div id="content__page__header" class="d-flex justify-content-between align-items-center">
+    <span>Students</span>
+    <a href="{{url_for('new_student')}}" class="btn btn-primary">Create new student</a>
+</div>
+<div id="content__page__body">
+    <table class="table">
+        <thead>
+        <tr>
+            <th style="width: 45%">Student_name</th>
+            <th style="width: 45%">Student_surname</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for student in students: %}
+        <tr>
+            <td>{{student.Student_name}}</td>
+            <td>{{student.Student_surname}}</td>
+            <td class="d-flex justify-content-end">
+                <a href="{{url_for('update_student', uuid=student.Student_card)}}" class="btn btn-success">Edit</a>
+                <form method="post" action="{{url_for('delete_student', uuid=student.Student_card)}}" class="delete-record">
+                    <input type="submit" value="Delete" class="btn btn-danger"/>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

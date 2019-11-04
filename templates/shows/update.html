@@ -1,0 +1,40 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<form method="post">
+    {{ form.hidden_tag() }}
+
+    <div class="form-group">
+        {{ form.Position.label }}
+        {% for error in form.errors.Position %}
+        <span style="color: red;">[{{error}}]</span>
+        {% endfor %}<br>
+        {{ form.Position(class_="form-control") }}
+    </div>
+    <div class="form-group">
+        {{ form.Salary.label }}
+        {% for error in form.errors.Salary %}
+        <span style="color: red;">[{{error}}]</span>
+        {% endfor %}<br>
+        {{ form.Salary(class_="form-control") }}
+    </div>
+    <div class="form-group">
+        {{ form.Start_date.label }}
+        {% if error_start %}
+        <span style="color: red;">[{{error_start}}]</span>
+        {% endif %}<br>
+        {{ form.Start_date(class_="form-control") }}
+        <p>Format is D.M.Y only!</p>
+    </div>
+    <div class="form-group">
+        {{ form.End_date.label }}
+        {% if error_end %}
+        <span style="color: red;">[{{error_end}}]</span>
+        {% endif %}<br>
+        {{ form.End_date(class_="form-control") }}
+        <p>Format is D.M.Y only!</p>
+    </div>
+    {{ form.Submit(class_="btn btn-success") }}
+</form>
+{% endblock %}
