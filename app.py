@@ -15,10 +15,6 @@ db.init_app(app)
 
 @app.route("/")
 def index():
-    db.create_all()
-    db.session.add(Users(Username="artemkovtun", Password="12345"))
-    db.session.add(Users(Username="test", Password="12345"))
-    db.session.commit()
     return "Database created"
 
 
