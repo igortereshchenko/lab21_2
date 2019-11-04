@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for
-from models import db, Users, Skills
+from models import db, Skills
 from visualization import visualization_data
 import os
 
@@ -15,6 +15,7 @@ db.init_app(app)
 
 @app.route("/")
 def index():
+    db.create_all()
     return "Database created"
 
 
