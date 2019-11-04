@@ -7,24 +7,27 @@
     <table class="table">
         <thead>
         <tr>
+            <th scope="col">student_name</th>
+            <th scope="col">student_group</th>
             <th scope="col">name</th>
-            <th scope="col">degree</th>
-
+            <th scope="col">type</th>
+            <th scope="col">vacancy</th>
+            <th scope="col">creation_date</th>
         </tr>
         </thead>
         <tbody>
-        {% for result in results%}
+        {% for skill in skills%}
         <tr>
-            <td> {{result.task_id}} </td>
-            <td> {{result.time_done}} </td>
-            <td> {{result.duration}}</td>
-            <td> {{result.complex}}</td>
-            <td> {{result.mark}}</td>
-
+            <td> {{skill.student_name}} </td>
+            <td> {{skill.student_group}} </td>
+            <td> {{skill.name}}</td>
+            <td> {{skill.type}}</td>
+            <td> {{skill.vacancy}}</td>
+            <td> {{skill.creation_date}}</td>
             <td>
                 <a href="/update" title="edit button">
                     <button type="button" class="btn btn-warning" name="btn_edit_user"
-                            data-user_id="{{result.task_id}}">Edit
+                            data-user_id="{{skill.student_name}}">Edit
                     </button>
                 </a>
             </td>

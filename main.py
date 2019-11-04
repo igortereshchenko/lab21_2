@@ -29,13 +29,13 @@ def ai():
     db.sqlalchemy_session.commit()
     return render_template('index.html')
 
-# @app.route('/show',methods=['GET'])
-# def show():
-#     db = PostgresDb()
-#
-#     result = db.sqlalchemy_session.query(Result).all()
-#
-#     return render_template('result.html', results=result)
+@app.route('/show',methods=['GET'])
+def show():
+    db = PostgresDb()
+
+    skill = db.sqlalchemy_session.query(Skill).all()
+
+    return render_template('skill.html', skills=skill)
 
 @app.route('/teacher', methods=['GET'])
 def index_teacher():
