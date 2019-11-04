@@ -75,8 +75,8 @@ class Skill(Base):
     student_group = Column(Integer, primary_key=True)
     name = Column(String, primary_key=True)
     type = Column(String, nullable=False)
-    vacancy = Column(String, primary_key=True)
-    creation_date = Column(Date, primary_key=True)
+    vacancy = Column(String, nullable=False)
+    creation_date = Column(Date,nullable=False)
 
     student_entity = relationship("Student")
 

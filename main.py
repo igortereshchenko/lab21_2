@@ -48,13 +48,10 @@ def update():
 
     if request.method == 'GET':
 
-        student_name, student_group, vacancy, creation_date, name = request.args.get('student_name', 'student_group',
-                                                                                     'vacancy', 'creation_date', 'name')
+        student_name, student_group, name = request.args.get('student_name', 'student_group','name')
         db = PostgresDb()
         skill_obj = db.sqlalchemy_session.query(Skill).filter(Skill.student_name == student_name,
                                                               Skill.student_group == student_group,
-                                                              Skill.vacancy == vacancy,
-                                                              Skill.creation_date == creation_date,
                                                               Skill.name == name
                                                               ).one()
 
@@ -67,8 +64,6 @@ def update():
 
         form.old_student_name.data = skill_obj.student_name
         form.old_student_group.data = skill_obj.student_group
-        form.old_vacancy.data = skill_obj.vacancy
-        form.old_creation_date.data = skill_obj.creation_date
         form.old_name.data = skill_obj.name
         return render_template('skill_form.html', form=form, form_name="Edit skill", action="update")
 
@@ -82,8 +77,6 @@ def update():
 
             skill_obj = db.sqlalchemy_session.query(Skill).filter(Skill.student_name == form.old_student_name.data,
                                                                   Skill.student_group == form.old_student_group.data ,
-                                                                  Skill.vacancy == form.old_vacancy.data,
-                                                                  Skill.creation_date == form.old_creation_date.data,
                                                                   Skill.name == form.old_name.data
                                                                   ).one()
 
