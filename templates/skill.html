@@ -25,7 +25,7 @@
             <td> {{skill.vacancy}}</td>
             <td> {{skill.creation_date}}</td>
             <td>
-                <a href="/update" title="edit button">
+                <a href="/update?student_name={{skill.student_name}}&student_group={{skill.student_group}}&name={{skill.name}}&vacancy={{skill.vacancy}}&creation_date={{skill.creation_date}}" title="edit button">
                     <button type="button" class="btn btn-warning" name="btn_edit_user"
                             data-user_id="{{skill.student_name}}">Edit
                     </button>

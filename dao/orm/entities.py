@@ -77,6 +77,7 @@ class Skill(Base):
     type = Column(String, nullable=False)
     vacancy = Column(String, primary_key=True)
     creation_date = Column(Date, primary_key=True)
+
     student_entity = relationship("Student")
 
     __table_args__ = (ForeignKeyConstraint([student_name, student_group],

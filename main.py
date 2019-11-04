@@ -1,11 +1,13 @@
 from flask import Flask, render_template, request, redirect, url_for
 
+from dao.db import PostgresDb
+
 from dao.orm.entities import *
 from forms.discipline_form import DisciplineForm
 from forms.student_form import StudentForm
 from forms.teacher_form import TeacherForm
+from forms.skill_form import SkillForm
 
-from dao.db import PostgresDb
 app = Flask(__name__)
 app.secret_key = 'development key'
 
@@ -14,28 +16,88 @@ app.secret_key = 'development key'
 def root():
     return render_template('index.html')
 
+
 @app.route('/ai', methods=['GET'])
 def ai():
     skill_obj = Skill(
         student_name='Mozgovoy Nikita',
-        student_group = 61,
-        name = 'OOP basic',
-        type = 'OOP',
-        vacancy = 'C++ developer',
-        creation_date = '2019-06-22 19:10:25-07'
+        student_group=61,
+        name='OOP basic',
+        type='OOP',
+        vacancy='C++ developer',
+        creation_date='2019-06-22 19:10:25-07'
     )
     db = PostgresDb()
     db.sqlalchemy_session.add(skill_obj)
     db.sqlalchemy_session.commit()
     return render_template('index.html')
 
-@app.route('/show',methods=['GET'])
+
+@app.route('/show', methods=['GET'])
 def show():
     db = PostgresDb()
 
     skill = db.sqlalchemy_session.query(Skill).all()
 
     return render_template('skill.html', skills=skill)
+
+
+@app.route('/update', methods=['GET', 'POST'])
+def update():
+    form = SkillForm()
+
+    if request.method == 'GET':
+
+        student_name, student_group, vacancy, creation_date, name = request.args.get('student_name', 'student_group',
+                                                                                     'vacancy', 'creation_date', 'name')
+        db = PostgresDb()
+        skill_obj = db.sqlalchemy_session.query(Skill).filter(Skill.student_name == student_name,
+                                                              Skill.student_group == student_group,
+                                                              Skill.vacancy == vacancy,
+                                                              Skill.creation_date == creation_date,
+                                                              Skill.name == name
+                                                              ).one()
+
+        # fill form and send to user
+        form.student_name.data = skill_obj.student_name
+        form.student_group.data = skill_obj.student_group
+        form.vacancy.data = skill_obj.vacancy
+        form.creation_date.data = skill_obj.creation_date
+        form.name.data = skill_obj.name
+
+        form.old_student_name.data = skill_obj.student_name
+        form.old_student_group.data = skill_obj.student_group
+        form.old_vacancy.data = skill_obj.vacancy
+        form.old_creation_date.data = skill_obj.creation_date
+        form.old_name.data = skill_obj.name
+        return render_template('skill_form.html', form=form, form_name="Edit skill", action="update")
+
+    else:
+        if not form.validate():
+            return render_template('skill_form.html', form=form, form_name="Edit skill",
+                                   action="update")
+        else:
+            db = PostgresDb()
+            # find professor
+
+            skill_obj = db.sqlalchemy_session.query(Skill).filter(Skill.student_name == form.old_student_name.data,
+                                                                  Skill.student_group == form.old_student_group.data ,
+                                                                  Skill.vacancy == form.old_vacancy.data,
+                                                                  Skill.creation_date == form.old_creation_date.data,
+                                                                  Skill.name == form.old_name.data
+                                                                  ).one()
+
+            # update fields from form data
+            skill_obj.student_name = form.student_name.data
+            skill_obj.student_group = form.student_group.data
+            skill_obj.vacancy = form.vacancy.data
+            skill_obj.creation_date = form.creation_date.data
+            skill_obj.name = form.name.data
+
+            db.sqlalchemy_session.commit()
+
+            return redirect(url_for('show'))
+
 
 @app.route('/teacher', methods=['GET'])
 def index_teacher():
@@ -274,7 +336,7 @@ def edit_discipline():
         else:
             db = PostgresDb()
             # find discipline
-            discipline = db.sqlalchemy_session.query(Discipline).filter(Discipline.name == form.old_name.data,).one()
+            discipline = db.sqlalchemy_session.query(Discipline).filter(Discipline.name == form.old_name.data, ).one()
 
             # update fields from form data
             discipline.name = form.name.data
