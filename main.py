@@ -14,17 +14,18 @@ app.secret_key = 'development key'
 def root():
     return render_template('index.html')
 
-@app.route('/install', methods=['GET'])
-def install():
-    result_obj = Result(
-        task_id=1,
-        time_done='19:10:25',
-        duration=60,
-        complex=4,
-        mark=95
+@app.route('/ai', methods=['GET'])
+def ai():
+    skill_obj = Skill(
+        student_name='Mozgovoy Nikita',
+        student_group = 61,
+        name = 'OOP basic',
+        type = 'OOP',
+        vacancy = 'C++ developer',
+        creation_date = '2019-06-22 19:10:25-07'
     )
     db = PostgresDb()
-    db.sqlalchemy_session.add(result_obj)
+    db.sqlalchemy_session.add(skill_obj)
     db.sqlalchemy_session.commit()
     return render_template('index.html')
 

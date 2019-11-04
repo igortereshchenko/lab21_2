@@ -54,12 +54,11 @@ class Student_Discipline(Base):
                                             Student.sgroup]), {})
 
 
-
 class Student_Task(Base):
     __tablename__ = 'Student_Task'
     task_id = Column(Integer, ForeignKey('Task.id'), primary_key=True)
     student_name = Column(String(255), primary_key=True)
-    student_group = Column(Integer,  primary_key=True)
+    student_group = Column(Integer, primary_key=True)
 
     student_entity = relationship("Student")
     task_entity = relationship("Task")
@@ -68,16 +67,22 @@ class Student_Task(Base):
                                             Student.sgroup]),
                       {})
 
-class Result(Base):
-    __tablename__='Result'
 
-    task_id = Column(Integer,ForeignKey('Task.id'),primary_key=True)
-    time_done = Column(Date,nullable=False)
-    duration = Column(Integer,nullable=False)
-    complex = Column(Integer,nullable=False)
-    mark = Column(Integer,nullable=False)
+class Skill(Base):
+    __tablename__ = 'Skill'
 
+    student_name = Column(String, primary_key=True)
+    student_group = Column(Integer, primary_key=True)
+    name = Column(String, primary_key=True)
+    type = Column(String, nullable=False)
+    vacancy = Column(String, primary_key=True)
+    creation_date = Column(Date, primary_key=True)
+    student_entity = relationship("Student")
 
+    __table_args__ = (ForeignKeyConstraint([student_name, student_group],
+                                           [Student.name,
+                                            Student.sgroup]),
+                      {})
 
 if __name__ == '__main__':
     from dao.db import PostgresDb
