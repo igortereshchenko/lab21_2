@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/common.css') }}">
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th style="width: 25%">Name</th>
+                            <th style="width: 25%">Vacancy</th>
+                            <th style="width: 20%">User</th>
+                            <th style="width: 15%">CreationDate</th>
+                            <th style="width: 15%">RemoveDate</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for skill in skills: %}
+                        <tr>
+                            <td>{{skill.Name}}</td>
+                            <td>{{skill.Vacancy}}</td>
+                            <td>{{skill.UsernameFk}}</td>
+                            <td>{{skill.CreationDate.strftime("%b %d %Y %H:%M:%S")}}</td>
+                            {% if skill.RemoveDate  %}
+                                <td>{{skill.RemoveDate.strftime("%b %d %Y %H:%M:%S")}}</td>
+                            {% else %}
+                                <td></td>
+                            {% endif %}
+                            <td>
+                                <a href="{{url_for('update', uuid=skill.Id)}}" class="btn btn-success">Edit</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+</body>
+</html>
